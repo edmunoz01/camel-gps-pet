@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.example.org/PetLocation/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="PetLocation" targetNamespace="http://www.example.org/PetLocation/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.example.org/PetLocation/">
+      <xsd:element name="receiveLocation">
+        <xsd:complexType>
+          <xsd:sequence>
+          	<xsd:element name="latitud" type="xsd:string" />
+          	<xsd:element name="longitud" type="xsd:string"></xsd:element>
+          	<xsd:element name="frecuenciaCardiaca" type="xsd:string"></xsd:element>
+          	<xsd:element name="frecuenciaRespiratoria" type="xsd:string"></xsd:element>
+          	<xsd:element name="idCollar" type="xsd:string"></xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="receiveLocationResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="out" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="receiveLocationRequest">
+    <wsdl:part element="tns:receiveLocation" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="receiveLocationResponse">
+    <wsdl:part element="tns:receiveLocationResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:portType name="PetLocation">
+    <wsdl:operation name="receiveLocation">
+      <wsdl:input message="tns:receiveLocationRequest"/>
+      <wsdl:output message="tns:receiveLocationResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="PetLocationSOAP" type="tns:PetLocation">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="receiveLocation">
+      <soap:operation soapAction="http://www.example.org/PetLocation/receiveLocation"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PetLocation">
+    <wsdl:port binding="tns:PetLocationSOAP" name="PetLocationSOAP">
+      <soap:address location="http://localhost:9090/PetLocationSOAP"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
